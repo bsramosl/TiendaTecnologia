@@ -1,0 +1,90 @@
+{% extends "Layouts/BaseMajor.html" %}
+{% load static %}
+
+{% block title %}
+ Alppha
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+
+{% block content %} 
+<div class="shop-section container mx-auto px-2 sm:px-8 my-5">
+    <div class="grid grid-cols-12 gap-5">
+        
+        <div class="col-span-12 md:col-span-4 lg:col-span-4 xl:col-span-3">
+            <form class="flex flex-col bg-white rounded-lg p-5" id="form" >
+                <div class="flex items-center gap-2 mb-5">
+                    <i class="bi bi-funnel flex text-sm text-primary-color"></i>
+                    <h1 class="text-xl uppercase font-bold">Search Filter</h1>
+                </div>
+                <div class="mb-5 pt-5 border-t-2">
+                    <div class="relative flex items-center">
+                        <i class="bi bi-search absolute flex ml-4 text-gray-400 text-stroke-medium"></i>
+                        <input class="input pl-10" id="search" type="search" placeholder="Search..." />
+                    </div>
+                </div> 
+                <div class="mb-5 pt-5 border-t-2">
+                    <div class="see-more relative pb-5">
+                        <div class="see-more-container max-h-[220px] gradient-bottom overflow-hidden">
+                            <div class="see-more-content">
+                                <span class="flex mb-2 font-semibold">Categories</span>
+                                {% for item in category %}
+                                <label class="flex items-center gap-2 p-1 select-none cursor-pointer hover:text-primary-color transition-all-300">
+                                    <input class="checkbox"  name="id[]" type="checkbox" value="{{item.id}}"/>
+                                    <span class="text-gray-title">{{item.name}}</span>
+                                </label>
+                                {% endfor %}
+                               
+                            </div>
+                        </div>
+                        <button class="btn-see-more absolute bottom-0 w-full flex justify-center z-10 hover:text-primary-color" type="button">
+                            <i class="bi bi-chevron-compact-down flex text-xl text-stroke-medium transition-all-300"></i>
+                        </button>
+                    </div>
+                </div> 
+                <div class="pt-5 border-t-2"> 
+                    <button class="btn-effect w-full bg-primary-color rounded-lg text-white uppercase font-bold p-2 mt-2" id="submitButton" type="submit">
+                        <span>Filter</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div id="busca" class="col-span-12 md:col-span-8 lg:col-span-8 xl:col-span-9">
+            <div id="sho" class="grid grid-cols-12 gap-5 mix-elements mix-all">
+              
+              
+            </div>
+        </div>
+        <div class="col-span-12">
+            <div class="flex justify-center items-center">
+                <ul class="pagination flex items-center">
+                    <li class="py-2 px-3 pointer-events-none text-gray-200"><i class="bi bi-arrow-left-short flex"></i></li>
+                    <li class="py-2 px-3 cursor-pointer active">1</li>
+                    <li class="py-2 px-3 cursor-pointer">2</li>
+                    <li class="py-2 px-3 cursor-pointer">3</li>
+                    <li class="py-2 px-3 hidden sm:block cursor-pointer tracking-wide">...</li>
+                    <li class="py-2 px-3 hidden sm:block cursor-pointer">10</li>
+                    <li class="py-2 px-3 hidden sm:block cursor-pointer">11</li>
+                    <li class="py-2 px-3 cursor-pointer text-primary-color"><i class="bi bi-arrow-right-short flex"></i></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+
+{% block extrajs %}  
+
+<script src="{% static 'shop.js'%}"></script>
+<script type="application/javascript">
+    shop();
+</script> 
+
+ 
+
+{% endblock extrajs %}

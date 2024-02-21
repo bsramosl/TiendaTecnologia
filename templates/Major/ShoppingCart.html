@@ -1,0 +1,178 @@
+
+{% extends "Layouts/BaseMajor.html" %}
+{% load static %}
+
+{% block title %}
+ Alppha
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+
+{% block content %} 
+
+<div class="breadcrumb-section container mx-auto px-2 sm:px-8 my-5">
+    <ul class="flex flex-wrap gap-1 items-center">
+        <li class="hover:text-primary-color transition-all-300">
+            <a href="{% url 'Store:Inicio' %}">Home</a>
+        </li>
+        <li>
+            <i class="bi bi-caret-right-fill flex text-primary-color"></i>
+        </li>
+        <li class="hover:text-primary-color transition-all-300 active">
+            <a href="{% url 'Store:ShoppingCart' %}">Shopping Cart</a>
+        </li>
+    </ul>
+</div>
+
+<div class="banner-title-section container mx-auto px-2 sm:px-8 my-5">
+			<div class="liner-container flex justify-center border-b-2 border-[rgba(119,119,119,.17)] my-5">
+				<h1 class="uppercase text-2xl font-bold inline-block border-b-2 border-primary-color mb-[-2px] pb-3">Shopping Cart</h1>
+			</div>
+		</div>
+
+		<div class="shopping-cart-page container mx-auto px-2 sm:px-8 my-5">
+			<!-- If the Shopping Cart is empty (replace hidden with flex) -->
+			<div class="shopping-cart-empty hidden flex-col justify-center items-center p-5 gap-4">
+				<i class="bi bi-cart-x text-8xl text-gray-200"></i>
+				<p class="font-semibold text-lg">There are no products in the cart.</p>
+				<a class="btn-effect flex justify-center items-center p-2 bg-primary-color rounded-lg gap-2 transition-all-300" href="#">
+					<span class="font-bold uppercase text-white">Go to the store</span>
+				</a>
+			</div>
+			<!-- -->
+			<form class="grid grid-cols-12 gap-5 bg-white rounded-lg p-2 xs:p-5"  >
+				<div class="col-span-12 lg:col-span-8">
+				 
+					<!-- Element Desktop -->
+					<div class="overflow-x-auto hidden lg:block">
+						<table class="w-full min-w-[800px] text-left"  id="data">
+							<thead>
+								<tr>
+									<th></th>
+									<th class="p-2">Product Name</th>
+									<th class="p-2">Unit Price</th>
+									<th class="p-2">Quantity</th>
+									<th class="p-2">Subtotal</th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								<!--{% if request.session.carrito.items %}
+								{% for key, value in request.session.carrito.items %}
+								<tr class="hover:bg-gray-100">
+									<td class="p-2">
+										<div class="border rounded-lg h-[100px] w-[100px] min-w-[100px] overflow-hidden">
+											<a href="#">
+												<img class="w-full h-full object-cover" src="{{value.image}}" alt="product">
+											</a>
+										</div>
+									</td>
+									<td class="p-2">
+										<a class="font-bold clamp-2 break-all" >{{value.nombre}}</a>
+									</td>
+									<td class="p-2">
+										<span class="font-bold text-primary-color">${{value.price}}</span>
+									</td>
+									<td class="p-2">
+										<div class="quantity inline-flex bg-white rounded-lg shadow">
+											<input class="quantity-value input-number w-12 text-center text-lg p-1 bg-transparent text-gray-400 border-none focus:ring-0 focus:border-none" type="number" value="{{value.cantidad}}">
+											<div class="flex flex-col justify-between w-5">
+												<button onclick="add_cart({{value.producto_id}})" class="quantity-btn increment text-primary-color" type="button"><i class="bi bi-caret-up-fill"></i></button>
+												<button onclick="restar_cart({{value.producto_id}})" class="quantity-btn decrement text-primary-color" type="button"><i class="bi bi-caret-down-fill"></i></button>
+											</div>
+										</div>
+									</td>
+									<td class="p-2">
+										<span class="font-bold text-primary-color"></span>
+									</td>
+									<td class="p-2">
+										<a onclick="delete_cart({{value.producto_id}})" class="tippy tippy-remove btn-delete text-slate-400 hover:text-primary-color transition-all-300">
+											<i class="bi bi-trash-fill inline pointer-events-none text-xl"></i>
+										</a>
+									</td>
+								</tr> 
+								 
+								{% endfor %}
+								{% else %}
+								<tr>
+									<td colspan="3">
+										<div class="alert alert-danger text-center"> Sin Productos </div>
+									</td>
+								</tr>
+								{% endif %}-->
+                  
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-span-12 lg:col-span-4">  
+					<div class="border-2 rounded-lg p-4">
+						<span class="font-bold text-lg text-center inline-block mb-10">Summary of your purchase:</span>
+						<div class="py-4">
+							<div class="flex justify-between my-2">
+								<span>Subtotal:</span>
+								<span id="subtotal"> </span>
+							</div>
+							<div class="flex justify-between my-2">
+								<span>Iva:</span>
+								<span id="iva"></span>
+							</div>
+							<div class="flex justify-between my-2">
+								<span>Shipping:</span>
+								<span>$0.00</span>
+							</div>
+						</div>
+						<div class="uppercase flex justify-between font-bold text-xl py-4 border-t-2 border-gray-200">
+							<span>Total:</span>
+							<span id="total"></span>
+						</div>
+						<button class="btn-view-shopping-cart btn-effect flex justify-center items-center w-full p-2 bg-primary-color rounded-lg transition-all-300" type="submit">
+							<span class="font-bold uppercase text-white">Continue</span>
+						</button>
+					</div>
+					<a class="flex justify-center items-center gap-2 my-5 hover:text-primary-color transition-all-300" href="shopping-cart.html">
+						<i class="bi bi-arrow-repeat flex text-xl"></i>
+						<span>Update Cart</span>
+					</a>
+					<a class="flex justify-center items-center gap-2 my-5 hover:text-primary-color transition-all-300" href="shopping-cart.html">
+						<i class="bi bi-cart-plus flex text-xl"></i>
+						<span>Add more products</span>
+					</a>
+				</div>
+			</form>
+		</div> 
+{% endblock %}
+
+
+{% block extrajs %}
+
+<link href="{% static 'bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.css' %}" rel="stylesheet"/>
+<script src="{% static 'bootstrap-touchspin-4.3.0/jquery.bootstrap-touchspin.js' %}"></script>
+<script src="{% static 'shoppingcart.js'%}"></script> 
+ 
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.12.1/datatables.min.js"></script> 
+<script type="application/javascript">
+	cart();
+    $(function () {
+        $('#data').DataTable({
+            responsive: true,
+            autoWidth: false,
+			searching: false, 
+            paging: false,
+            info: false,  
+        });
+    }); 
+</script>  
+
+{% endblock extrajs %}
+
+
+
+
+
+
+
+

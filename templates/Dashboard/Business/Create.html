@@ -1,0 +1,53 @@
+{% extends "Layouts/IndexDashboard.html" %}
+{% load static %}
+
+{% block title %}
+ 
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+  
+
+{% block content %}  
+   
+
+
+<section class="content">
+    
+
+
+
+    <!-- Default box -->
+    <div class="card">
+        <div class="card-body row">
+          <div class="col-3 text-center d-flex align-items-center justify-content-center">
+            
+          </div>
+          <div class="col-7">
+        <form method="post" class="form-horizontal"  enctype="multipart/form-data">
+            {% csrf_token %}
+            {{form.as_p}} 
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary" value="Guardar">
+            </div>
+        </form>   
+          </div>
+        </div>
+      </div>
+  
+    </section>
+
+{% endblock %}
+
+
+{% block extrajs %} 
+ 
+ 
+{% endblock extrajs %}
+
+ 
+ 
+

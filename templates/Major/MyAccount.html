@@ -1,0 +1,404 @@
+
+{% extends "Layouts/BaseMajor.html" %}
+{% load static %}
+
+{% block title %}
+ Alppha
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+
+{% block content %} 
+
+<div class="container mx-auto px-2 sm:px-8 my-5">
+    <div class="grid grid-cols-12 gap-2 tabs-container">
+        <div class="col-span-12 lg:col-span-4">
+            <div class="flex flex-col items-center gap-5 bg-white rounded p-5">
+                <div class="flex flex-col items-center">
+                    <div class="relative">
+                        <div class="rounded-full h-24 w-24 overflow-hidden bg-gray-200 shadow-md">
+                            <img class="h-full w-full object-cover" src="img/comments/profile_1.png" alt="profile" />
+                        </div>
+                        <i class="bi bi-camera-fill absolute top-0 left-0 p-1 rounded-full flex text-white bg-slate-500 hover:bg-slate-400 transition-all-300 cursor-pointer shadow-md"></i>
+                    </div>
+                    <div class="mt-2 text-center">
+                        <span class="block font-bold">{{ user.username }}</span>
+                        <span class="text-slate-400">{{ user.email }}</span>
+                    </div>
+                </div>
+                <ul class="w-full text-sm">
+                    <li class="btn-tabs tab-active-2 border-t transition-all-300 hover:bg-gray-100 active">
+                        <a class="flex items-center gap-2 px-1 py-2" href="javascript:void(0)">
+                            <i class="bi bi-person flex text-primary-color text-3xl"></i>
+                            <span>My Account</span>
+                        </a>
+                    </li>
+                    <li class="btn-tabs tab-active-2 border-t transition-all-300 hover:bg-gray-100">
+                        <a class="flex items-center gap-2 px-1 py-2" href="javascript:void(0)">
+                            <i class="bi bi-house-door flex text-primary-color text-3xl"></i>
+                            <span>My Address</span>
+                        </a>
+                    </li>
+                    <li class="btn-tabs tab-active-2 border-t transition-all-300 hover:bg-gray-100">
+                        <a class="flex items-center gap-2 px-1 py-2" href="javascript:void(0)">
+                            <i class="bi bi-clipboard flex text-primary-color text-3xl"></i>
+                            <span>My Order</span>
+                        </a>
+                    </li>
+                    <li class="btn-tabs tab-active-2 border-t transition-all-300 hover:bg-gray-100">
+                        <a class="flex items-center gap-2 px-1 py-2" href="javascript:void(0)">
+                            <i class="bi bi-credit-card flex text-primary-color text-3xl"></i>
+                            <span>Payment Methods</span>
+                        </a>
+                    </li>
+                    <li class="btn-tabs tab-active-2 border-t transition-all-300 hover:bg-gray-100">
+                        <a class="flex items-center px-1 py-2" href="javascript:void(0)">
+                            <div class="flex items-center gap-2">
+                                <i class="bi bi-headset flex text-primary-color text-3xl"></i>
+                                <span>Support Tickets</span>
+                            </div>
+                            <span class="badge h-[22px] min-w-[22px] px-[6px] ml-auto">1</span>
+                        </a>
+                    </li>
+                    <li class="border-t transition-all-300 hover:bg-gray-100">
+                        <a class="flex items-center gap-2 px-1 py-2" href="{% url 'Store:Logout' %}">
+                            <i class="bi bi-box-arrow-left flex text-primary-color text-3xl"></i>
+                            <span>Log out</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-span-12 lg:col-span-8 tabs-content">
+            <div class="tab-content flex flex-col gap-5 bg-white rounded h-full p-5 active">
+                <span class="block font-bold text-xl">My Account</span>
+                <form class="grid grid-cols-12 gap-2" action="#">
+                    <div class="col-span-12 xs:col-span-6">
+                        <label class="flex flex-col text-sm">
+                            First name
+                            <input class="input h-10" type="text"  value="{{ user.first_name }}" required />
+                        </label>
+                    </div>
+                    <div class="col-span-12 xs:col-span-6">
+                        <label class="flex flex-col text-sm">
+                            Last name
+                            <input class="input h-10" type="text" value="{{ user.last_name }}" required />
+                        </label>
+                    </div>
+                    <div class="col-span-12 xs:col-span-6">
+                        <label class="flex flex-col text-sm">
+                            Username
+                            <input class="input input-number h-10" type="text"  value="{{ user.username }}" required />
+                        </label>
+                    </div>
+                    <div class="col-span-12 xs:col-span-6">
+                        <label class="flex flex-col text-sm">
+                           Email
+                            <input class="input input-number h-10" type="email"  value="{{ user.email }}" required />
+                        </label>
+                    </div> 
+                    <div class="col-span-12">
+                        <button class="btn-effect w-full bg-primary-color text-white uppercase font-bold rounded-lg p-2" type="submit">
+                            <span class="text-center">Save Changes</span>
+                        </button>
+                    </div>
+                </form>
+                <div class="flex flex-col gap-2">
+                    <a class="btn-open-modal p-2 rounded-lg border bg-slate-100 hover:bg-slate-200 transition-all-300" href="javascript:void(0)" data-target=".change-password-modal">
+                        <div class="flex justify-between items-center gap-2 pointer-events-none">
+                            <div>
+                                <i class="bi bi-lock-fill"></i>
+                                <span>Change Password</span>
+                            </div>
+                            <i class="bi bi-arrow-right-short flex text-primary-color text-2xl"></i>
+                        </div>
+                    </a>
+                    <a class="btn-open-modal p-2 rounded-lg border bg-slate-100 hover:bg-slate-200 transition-all-300" href="javascript:void(0)" data-target=".deactivate-account-modal">
+                        <div class="flex justify-between items-center gap-2 pointer-events-none">
+                            <div>
+                                <i class="bi bi-person-x-fill"></i>
+                                <span>Deactivate Account</span>
+                            </div>
+                            <i class="bi bi-arrow-right-short flex text-primary-color text-2xl"></i>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            <div class="tab-content flex flex-col gap-5 bg-white rounded h-full p-5">
+                <span class="block font-bold text-xl">My Address</span>
+                <ul class="flex flex-col gap-4">
+                    <li class="relative">
+                        <input class="sr-only peer" type="radio" value="" name="address" id="address-1" checked="" />
+                        <label class="flex flex-col gap-5 p-2 w-full bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-primary-color peer-checked:ring-2 peer-checked:border-transparent" for="address-1">
+                            <span class="font-bold">John Doe</span>
+                            <div class="text-sm">
+                                <span class="block">Olavarría, Buenos Aires</span>
+                                <span class="block">7400</span>
+                                <span class="block">Av. Colón 0101</span>
+                                <span class="block">(+01)1234567890</span>
+                            </div>
+                            <div class="flex justify-end items-center gap-4 text-slate-400">
+                                <div class="btn-open-modal tippy tippy-edit hover:text-primary-color transition-all-300" data-target=".edit-address-modal">
+                                    <i class="bi bi-pencil-fill flex pointer-events-none"></i>
+                                </div>
+                                <div class="btn-open-modal tippy tippy-remove hover:text-primary-color transition-all-300" data-target=".delete-modal">
+                                    <i class="bi bi-trash-fill flex pointer-events-none"></i>
+                                </div>
+                            </div>
+                        </label>
+                    </li>
+                    <li class="relative">
+                        <input class="sr-only peer" type="radio" value="" name="address" id="address-2" />
+                        <label class="flex flex-col gap-5 p-2 w-full bg-white border border-gray-300 rounded-lg cursor-pointer focus:outline-none hover:bg-gray-50 peer-checked:ring-primary-color peer-checked:ring-2 peer-checked:border-transparent" for="address-2">
+                            <span class="font-bold">John Doe</span>
+                            <div class="text-sm">
+                                <span class="block">Olavarría, Buenos Aires</span>
+                                <span class="block">7400</span>
+                                <span class="block">Av. Colón 0101</span>
+                                <span class="block">(+01)1234567890</span>
+                            </div>
+                            <div class="flex justify-end items-center gap-4 text-slate-400">
+                                <div class="btn-open-modal tippy tippy-edit hover:text-primary-color transition-all-300" data-target=".edit-address-modal">
+                                    <i class="bi bi-pencil-fill flex pointer-events-none"></i>
+                                </div>
+                                <div class="btn-open-modal tippy tippy-remove hover:text-primary-color transition-all-300" data-target=".delete-modal">
+                                    <i class="bi bi-trash-fill flex pointer-events-none"></i>
+                                </div>
+                            </div>
+                        </label>
+                    </li>
+                </ul>
+                <button class="btn-open-modal btn-effect w-full bg-primary-color text-white uppercase font-bold rounded-lg p-2" data-target=".add-address-modal">
+                    <span class="text-center pointer-events-none">Add Address</span>
+                </button>
+            </div>
+            <div class="tab-content flex flex-col gap-5 bg-white rounded h-full p-5">
+                <span class="block font-bold text-xl">My Orders</span>
+                <div class="flex flex-wrap justify-between gap-5">
+                    <form class="search" action="#">
+                        <div class="flex overflow-hidden h-[40px] rounded-[50px] bg-gray-100">
+                            <input class="search bg-transparent w-full border-none focus:ring-0 focus:ring-transparent focus:border-none py-[5px] pl-5 text-slate-600" type="search" placeholder="Search..." />
+                            <button class="btn-search text-slate-600 px-3" type="submit">
+                                <i class="bi bi-search text-xl flex"></i>
+                            </button>
+                        </div>
+                    </form>
+                    <ul class="order-mix flex flex-wrap">
+                        <li class="control relative cursor-pointer py-2 px-3 rounded" data-filter=".mix-main">
+                            <span>All</span>
+                        </li>
+                        <li class="control relative flex items-center gap-2 cursor-pointer py-2 px-3 rounded" data-filter=".mix-processing">
+                            <i class="bi bi-clock-history text-yellow-300"></i>
+                            <span>Processing</span>
+                        </li>
+                        <li class="control relative flex items-center gap-2 cursor-pointer py-2 px-3 rounded" data-filter=".mix-completed">
+                            <i class="bi bi-check-circle text-green-300"></i>
+                            <span>Completed</span>
+                        </li>
+                        <li class="control relative flex items-center gap-2 cursor-pointer py-2 px-3 rounded" data-filter=".mix-cancelled">
+                            <i class="bi bi-x-circle text-red-300"></i>
+                            <span>Cancelled </span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="mix-elements mix-all grid grid-cols-12">
+                    {% for orders in order %}
+                    <div class="col-span-12 mix mix-main mix-processing">
+                        <a class="btn-open-modal block relative p-4 transition-all-300 hover:bg-gray-100" href="javascript:void(0)" data-target=".order-details-modal">
+                            <div class="flex flex-col sm:flex-row gap-5 pointer-events-none">
+                                <div class="relative">
+                                    <div class="border bg-white rounded-lg h-[80px] w-[80px] min-w-[80px] overflow-hidden">
+                                        <img class="w-full h-full object-cover" src="img/product/prod-1.jpg" alt="product" />
+                                    </div>
+                                    <div class="absolute -top-2 -right-2 border bg-white rounded-lg h-[30px] w-[30px] min-w-[30px] overflow-hidden">
+                                        <img class="w-full h-full object-cover" src="img/cards/mousepad.jpg" alt="product" />
+                                    </div>
+                                </div>
+                                <div class="flex flex-col justify-between">
+                                    <span class="font-semibold text-lg clamp-2 break-all">{{orders.product.name}}</span>
+                                    <div class="flex items-center gap-1 text-xs my-1">
+                                        <i class="bi bi-clock flex"></i>
+                                        <span>08/01/2022</span>
+                                    </div>
+                                    <div class="flex flex-col">
+                                        <span class="text-xs font-light">Transaction. ID</span>
+                                        <span class="text-sm font-semibold">#1998ARG</span>
+                                    </div>
+                                </div>
+                                <div class="flex flex-col mt-auto sm:ml-auto">
+                                    <span class="text-xs font-light whitespace-nowrap">Total Payment</span>
+                                    <span class="text-sm font-semibold">$37.00</span>
+                                </div>
+                                <span class="absolute top-0 right-0 text-sm bg-yellow-200 text-yellow-500 m-2 py-px px-2 rounded-xl"> Processing </span>
+                            </div>
+                        </a>
+                    </div>
+                    {% endfor %}
+                    
+                </div>
+                <button class="mx-auto border bg-gray-100 py-2 px-3 rounded transition-all-300 hover:bg-gray-200">Show More</button>
+            </div>
+            <div class="tab-content flex flex-col gap-5 bg-white rounded h-full p-5">
+                <span class="block font-bold text-xl">Payment Methods</span>
+                <div class="flex flex-col gap-4">
+                    <div class="grid grid-cols-12 gap-1 items-start border rounded-lg p-2 hover:bg-gray-100 transition-all-300">
+                        <div class="col-span-6 sm:col-span-2">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Card</span>
+                                <div class="h-10 w-10">
+                                    <img class="h-full w-full object-contain" src="img/svg/visa-logo.svg" alt="visa" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Name</span>
+                                <span class="font-semibold">John Doe</span>
+                            </div>
+                        </div>
+                        <div class="col-span-12 xs:col-span-6 sm:col-span-4">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Card Number</span>
+                                <span>1234***********</span>
+                            </div>
+                        </div>
+                        <div class="col-span-12 xs:col-span-6 sm:col-span-2">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Expire Date</span>
+                                <span>09/29</span>
+                            </div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-1 self-center">
+                            <div class="btn-open-modal flex sm:hidden text-primary-color hover:text-primary-hover" data-target=".delete-modal">Remove</div>
+                            <div class="btn-open-modal hidden sm:inline tippy tippy-remove text-slate-400 hover:text-primary-color cursor-pointer transition-all-300" data-target=".delete-modal">
+                                <i class="bi bi-trash-fill inline pointer-events-none text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-1 items-start border rounded-lg p-2 hover:bg-gray-100 transition-all-300">
+                        <div class="col-span-6 sm:col-span-2">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Card</span>
+                                <div class="h-10 w-10">
+                                    <img class="h-full w-full object-contain" src="img/svg/mastercard-logo.svg" alt="visa" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Name</span>
+                                <span class="font-semibold">John Doe</span>
+                            </div>
+                        </div>
+                        <div class="col-span-12 xs:col-span-6 sm:col-span-4">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Card Number</span>
+                                <span>1234***********</span>
+                            </div>
+                        </div>
+                        <div class="col-span-12 xs:col-span-6 sm:col-span-2">
+                            <div class="flex flex-col">
+                                <span class="text-xs font-light">Expire Date</span>
+                                <span>09/29</span>
+                            </div>
+                        </div>
+                        <div class="col-span-12 sm:col-span-1 self-center">
+                            <div class="btn-open-modal flex sm:hidden text-primary-color hover:text-primary-hover" data-target=".delete-modal">Remove</div>
+                            <div class="btn-open-modal hidden sm:inline tippy tippy-remove text-slate-400 hover:text-primary-color cursor-pointer transition-all-300" data-target=".delete-modal">
+                                <i class="bi bi-trash-fill inline pointer-events-none text-xl"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn-open-modal btn-effect w-full bg-primary-color text-white uppercase font-bold rounded-lg p-2" data-target=".add-payment-modal">
+                        <span class="text-center pointer-events-none">Add Payment</span>
+                    </button>
+                </div>
+            </div>
+            <div class="tab-content flex flex-col gap-5 bg-white rounded h-full p-5">
+                <span class="block font-bold text-xl">Support Tickets</span>
+                <div class="flex flex-col gap-4">
+                    <a class="btn-open-modal border rounded-lg p-2 hover:bg-gray-100 transition-all-300" href="javascript:void(0)" data-target=".ticket-details-modal">
+                        <div class="grid grid-cols-12 gap-2 items-start pointer-events-none">
+                            <div class="col-span-12 sm:col-span-3">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Ticket. ID</span>
+                                    <span class="font-semibold">#1196SD2F</span>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Date</span>
+                                    <span>08/01/2022</span>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-4">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Subject</span>
+                                    <p class="clamp">There is a problem with the product.</p>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 sm:justify-self-end">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Status</span>
+                                    <span class="text-sm bg-green-200 text-green-500 py-px px-2 rounded-xl w-min"> Open </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <a class="btn-open-modal border rounded-lg p-2 hover:bg-gray-100 transition-all-300" href="javascript:void(0)" data-target=".ticket-details-modal">
+                        <div class="grid grid-cols-12 gap-2 items-start pointer-events-none">
+                            <div class="col-span-12 sm:col-span-3">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Ticket. ID</span>
+                                    <span class="font-semibold">#1196SD2F</span>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-3">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Date</span>
+                                    <span>08/01/2022</span>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-4">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Subject</span>
+                                    <p class="clamp">There is a problem with the product.</p>
+                                </div>
+                            </div>
+                            <div class="col-span-12 sm:col-span-2 sm:justify-self-end">
+                                <div class="flex flex-col">
+                                    <span class="text-xs font-light">Status</span>
+                                    <span class="text-sm bg-red-200 text-red-500 py-px px-2 rounded-xl w-min"> Close </span>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    <button class="btn-open-modal btn-effect w-full bg-primary-color text-white uppercase font-bold rounded-lg p-2" data-target=".new-ticket-modal">
+                        <span class="text-center pointer-events-none">New Ticket</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block extrajs %}  
+
+ 
+
+{% endblock extrajs %}
+
+
+
+
+
+
+
+

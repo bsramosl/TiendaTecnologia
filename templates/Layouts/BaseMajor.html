@@ -1,0 +1,503 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+	
+<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<link rel="shortcut icon" href="/static/store/img/favicon.ico" />
+		<link rel="stylesheet" href="{% static 'store/unpkg.com/swiper%409.0.5/swiper-bundle.min.css'%}" />
+		<link rel="stylesheet" href="{% static 'store/cdn.jsdelivr.net/npm/bootstrap-icons%401.7.2/font/bootstrap-icons.css'%}" />
+		<link rel="stylesheet" href="{% static 'store/unpkg.com/metismenujs%401.4.0/dist/metismenujs.min.css'%}" />
+		<link rel="stylesheet" href="{% static 'store/plugins/iziToast/iziToast.min.css'%}" />
+		<link rel="stylesheet" href="{% static 'store/css/main.css'%}" />
+		<title>Megabyte</title>
+	</head>
+
+	<body class="font-poppins text-txt bg-body overflow-hidden flex flex-col min-h-screen">
+		<header class="header-section shadow-custom-1 relative z-30">
+			<div class="hidden sm:flex bg-secondary-color">
+				<div class="grid grid-cols-12 container mx-auto px-2 sm:px-8 py-[6px] h-full">
+					<div class="col-span-8 self-center">
+						<div class="flex gap-[15px]">
+							<div class="flex items-center gap-2">
+								<i class="bi bi-envelope text-2xl text-primary-color flex"></i>
+								<a id="email" href="#" class="text-white font-light">  </a>
+							</div>
+							<div class="flex items-center gap-2">
+								<i class="bi bi-telephone text-xl text-primary-color flex"></i>
+								<a href="#" id="phone" class="text-white font-light">  </a>
+							</div>
+						</div>
+					</div>
+					<div class="col-span-4 justify-self-end self-center">
+						<div class="flex items-center gap-[10px]">
+							<a href="#">
+								<i class="bi bi-instagram flex text-icon hover:text-white transition-all-300"></i>
+							</a>
+							<a href="#">
+								<i class="bi bi-facebook flex text-icon hover:text-white transition-all-300"></i>
+							</a>
+							<a href="#">
+								<i class="bi bi-twitter flex text-icon hover:text-white transition-all-300"></i>
+							</a>
+							<a href="#">
+								<i class="bi bi-youtube flex text-icon hover:text-white transition-all-300"></i>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bg-secondary-color">
+				<div class="container mx-auto px-2 sm:px-8 py-5 h-full grid grid-cols-4 lg:grid-cols-12 gap-1 lg:gap-0">
+					<div class="col-span-2 lg:col-span-3 order-1 lg:order-1 self-center">
+						<a href="{% url 'Store:Inicio' %}" id="logo">
+							
+						</a>
+					</div>
+					<div class="header-search hidden lg:block col-span-4 lg:col-span-6 order-3 lg:order-2 self-center mt-[10px] lg:mt-0 transition-all-300">
+						<form class="search" action="{% url 'Store:Search'%}" method="POST">
+							<div class="flex overflow-hidden h-[40px] rounded-[50px] bg-primary-rgba">
+								<input  name="searching" id="searching" class="search bg-transparent w-full border-none focus:ring-0 focus:ring-transparent focus:border-none py-[5px] pl-5 text-white placeholder-icon" type="search" placeholder="Search..." />
+								<button id="sear" class="btn-search text-white px-3" type="submit">
+									<i class="bi bi-search text-xl flex"></i>
+								</button>
+							</div>
+						</form>
+					</div>
+					<div class="col-span-2 lg:col-span-3 order-2 lg:order-3 justify-self-end self-center flex gap-2 xl:gap-5">
+						<div class="flex items-center lg:hidden">
+							<button class="btn-search-mob text-white p-[5px]">
+								<i class="bi bi-search flex text-2xl pointer-events-none"></i>
+							</button>
+						</div>
+						<div class="flex items-center lg:hidden">
+							<button class="btn-open-modal text-white" data-target=".menu-mob">
+								<i class="bi bi-list flex text-3xl pointer-events-none"></i>
+							</button>
+						</div>
+						<div class="group-items text-white items-center gap-5 hidden lg:flex">
+							<div class="relative">
+								<a class="btn-open-modal" data-target=".wishlist-modal" href="javascript:void(0)">
+									<i class="bi bi-heart text-white text-[32px] transform translate-y-1 flex pointer-events-none"></i>
+								</a>
+								<span class="badge absolute top-0 right-[-6px] h-[15px] min-w-[15px] px-[2px]">0</span>
+							</div>
+							<div class="relative">
+								<a class="btn-open-modal" data-target=".shopping-cart-modal" href="javascript:void(0)">
+									<i class="bi bi-cart2 text-white text-[35px] flex pointer-events-none"></i>
+								</a>
+								<span id="totalitems" class="badge absolute top-0 right-[-6px] h-[15px] min-w-[15px] px-[2px]"> </span>
+							</div>
+						</div>
+						<div class="hidden lg:flex relative group">
+							{% if user.is_authenticated %}
+							<div class="flex items-center gap-1 cursor-pointer select-none">
+								<span class="font-semibold text-white">{{ user.first_name }} {{ user.last_name }}</span>
+								<i class="bi bi-caret-down-fill text-white text-sm flex rotate-0 group-hover:rotate-180 transition-all-300"></i>
+							</div>
+							<div class="absolute top-full z-30 w-[120%] invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all-300 pt-[10px]">
+								<div class="relative arrow">
+									<ul class="bg-white shadow-custom-1 rounded-md overflow-hidden p-[6px]">
+										<li class="hover:font-semibold">
+											<a href="{% url 'Store:MyAccount' %}" class="btn-open-modal" data-tab="0" data-target=".entry-modal">
+												<div class="flex items-center gap-2 p-1 pointer-events-none">
+													<i class="bi bi-box-arrow-in-right text-xl text-primary-color flex"></i>
+													<span>My Account</span>
+												</div>
+											</a>
+										</li>
+										<li class="hover:font-semibold">
+											<a href="{% url 'Store:Logout' %}" class="btn-open-modal" data-tab="1" data-target=".entry-modal">
+												<div class="flex items-center gap-2 p-1 pointer-events-none">
+													<i class="bi bi-person text-xl text-primary-color flex"></i>
+													<span>Logout</span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							{% else %}
+							<div class="flex items-center gap-1 cursor-pointer select-none">
+								<span class="font-semibold text-white">My Account</span>
+								<i class="bi bi-caret-down-fill text-white text-sm flex rotate-0 group-hover:rotate-180 transition-all-300"></i>
+							</div>
+							<div class="absolute top-full z-30 w-[120%] invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all-300 pt-[10px]">
+								<div class="relative arrow">
+									<ul class="bg-white shadow-custom-1 rounded-md overflow-hidden p-[6px]">
+										<li class="hover:font-semibold">
+											<a href="{% url 'Store:Login' %}" class="btn-open-modal" data-tab="0" data-target=".entry-modal">
+												<div class="flex items-center gap-2 p-1 pointer-events-none">
+													<i class="bi bi-box-arrow-in-right text-xl text-primary-color flex"></i>
+													<span>Login</span>
+												</div>
+											</a>
+										</li>
+										<li class="hover:font-semibold">
+											<a href="{% url 'Store:Logout' %}" class="btn-open-modal" data-tab="1" data-target=".entry-modal">
+												<div class="flex items-center gap-2 p-1 pointer-events-none">
+													<i class="bi bi-person text-xl text-primary-color flex"></i>
+													<span>SingUp</span>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							{% endif %}	 							
+								
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="bg-white hidden lg:block">
+				<nav class="container mx-auto px-2 sm:px-8">
+					<ul class="menu flex flex-wrap justify-between items-center text-lg py-[10px]">
+						 
+						<li class="underlined-animated"><a href="{% url 'Store:Inicio' %}">Home</a></li> 
+						<li class="underlined-animated"><a href="{% url 'Store:Shop' %}">Shop</a></li> 
+						<li class="underlined-animated"><a href="{% url 'Store:ShoppingCart' %}">Shopping Cart</a></li>
+						<li class="underlined-animated"><a href="{% url 'Store:ContactUs' %}">Contact Us</a></li>
+					</ul>
+				</nav>
+			</div>
+		</header>
+
+        
+        {% block content %} 
+
+ 
+
+        {% endblock %}
+
+		
+ 
+ 
+		<!-- Modals -->
+	 
+
+		<div class="shopping-cart-modal modal bg-overlay fixed z-50 h-full w-full inset-0 invisible opacity-0 transition-all-300">
+			<div class="flex h-full w-full">
+				<div  class="modal-content relative bg-white h-full w-[400px] min-w-[250px] right-[-999px] ml-auto transition-all-300 flex flex-col">
+					<div class="w-full">
+						<div class="border-b-2 border-gray-200 p-5">
+							<h3 class="uppercase text-xl font-bold">Shopping Cart</h3>
+						</div>
+						<button class="btn-close-modal absolute top-5 right-5 p-[3px] hover:text-slate-400 transition-all-300">
+							<i class="bi bi-x-lg flex text-xl text-stroke-medium pointer-events-none"></i>
+						</button>
+					</div>
+					<div id="res" class="h-full overflow-auto">
+					 
+				    </div> 
+					
+					<div class="bg-white px-1 xs:px-5 pt-5 border-t-2 border-gray-200 mt-auto">
+						<div class="flex justify-between">
+							<span class="uppercase text-lg">Subtotal:</span>
+							<span id="sub" class="text-primary-color font-semibold text-lg">  </span>
+						</div>
+						<a class="my-5 btn-effect flex justify-center items-center w-full p-2 bg-primary-color rounded-lg transition-all-300" href="{% url 'Store:ShoppingCart' %}">
+							<span class="font-bold uppercase text-white">View Shopping Cart</span>
+						</a>
+						<a class="my-5 btn-effect flex justify-center items-center w-full p-2 bg-primary-color rounded-lg transition-all-300" href="checkout.html">
+							<span class="font-bold uppercase text-white">Checkout now</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="quick-view-modal modal bg-overlay flex flex-col justify-start items-center fixed z-50 h-full w-full inset-0 invisible opacity-0 transition-all-300 overflow-auto">
+			<div class="flex justify-center my-10 w-full">
+				<div class="modal-content scale-0 w-[900px] min-w-[250px] bg-body rounded-lg px-3 pb-3 xs:px-5 xs:pb-5 pt-7 mx-3 md:m-5 relative">
+					<button class="btn-close-modal absolute top-0 right-0 sm:text-white sm:bg-primary-color sm:hover:bg-primary-hover transition-all-300 sm:top-[-10px] sm:right-[-10px] sm:rounded-lg p-2">
+						<i class="bi bi-x-lg flex text-stroke-medium pointer-events-none"></i>
+					</button>
+					<div class="grid grid-cols-12 gap-5">
+						<div class="col-span-12 md:col-span-7 max-h-[500px]">
+							<div class="swiper swiper-top group relative flex items-center rounded-lg">
+								<div class="swiper-wrapper z-[5]">
+									<div class="swiper-slide">
+										<div class="swiper-zoom-container" id="wimage">
+										 
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="swiper-zoom-container" id="wimage2">
+											 
+										</div>
+									</div>
+									<div class="swiper-slide">
+										<div class="swiper-zoom-container" id="wimage3">
+											 
+										</div>
+									</div>
+								</div>
+								<div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+								<div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+							</div>
+							<div class="swiper swiper-thumbs">
+								<div class="swiper-wrapper">
+									<div class="swiper-slide cursor-pointer rounded-lg" id="wimage4">
+										 
+									</div>
+									<div class="swiper-slide cursor-pointer rounded-lg" id="wimage5">
+										 
+									</div>
+									<div class="swiper-slide cursor-pointer rounded-lg" id="wimage6">
+										 
+									</div>
+								</div>
+								<div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+								<div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+							</div>
+						</div>
+						<div class="col-span-12 md:col-span-5">
+							<div class="my-1">
+								<a id="wname" class="clamp-2 text-2xl font-medium break-all hover:text-primary-color transition-all-300"  >name</a>
+							</div>
+							<div class="my-2 flex justify-between">
+								<div class="flex">
+									<i class="bi bi-star-fill text-base text-star flex"></i>
+									<i class="bi bi-star-fill text-base text-star flex"></i>
+									<i class="bi bi-star-fill text-base text-star flex"></i>
+									<i class="bi bi-star-fill text-base text-star flex"></i>
+									<i class="bi bi-star-fill text-base flex text-gray-200"></i>
+								</div>
+								<div class="ml-auto" id="wstock">
+									 
+								</div>
+							</div>
+							<div class="flex items-center my-5 gap-5">
+								<div class="flex text-primary-color bg-white rounded-lg py-2 px-3">
+									<span class="text-sm">$</span>
+									<span id="wprice" class="text-2xl font-semibold leading-7">Price</span>
+								</div>
+								 
+							</div>
+							<div class="my-4">
+								<p id="wdescripcion" class="clamp-5 break-all">Description</p>
+							</div>
+							<div class="flex gap-1">
+								<form action="javascript:void(0)"> 
+									<div class="flex flex-wrap justify-start gap-5">
+										<div class="quantity inline-flex bg-white rounded-lg">
+											<input class="quantity-value input-number w-12 text-center text-lg p-1 bg-transparent text-gray-400 border-none focus:ring-0 focus:border-none" type="number" value="0" />
+											<div class="flex flex-col justify-between w-5">
+												<button class="quantity-btn increment text-primary-color" type="button"><i class="bi bi-caret-up-fill"></i></button>
+												<button class="quantity-btn decrement text-primary-color" type="button"><i class="bi bi-caret-down-fill"></i></button>
+											</div>
+										</div>
+										<div id="add" class="flex gap-2"> 
+
+										</div>
+									</div>
+								</form>
+							</div>
+							<div class="mt-5 pt-5 border-t border-gray-200">
+								<div>
+									<b>Categories: </b>
+									<span><a href="#" class="text-zinc-500">Hardware</a>, <a href="#" class="text-zinc-500">Processors</a></span>
+								</div>
+								<div class="flex gap-2">
+									<b>Share:</b>
+									<div class="flex items-center gap-[10px]">
+										<a href="#">
+											<i class="bi bi-facebook flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+										</a>
+										<a href="#">
+											<i class="bi bi-twitter flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+										</a>
+										<a href="#">
+											<i class="bi bi-whatsapp flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+										</a>
+										<a href="#">
+											<i class="bi bi-link-45deg flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	 
+
+		<div class="loader fixed z-[999] flex justify-center items-center w-screen h-screen bg-body">
+			<div class="loader-content flex flex-col items-center gap-2">
+				<span id="loader" class="text-3xl font-semibold text-gray-200">  </span>
+				<div class="flex gap-1 h-1 w-40 bg-gray-200 overflow-hidden">
+					<div class="animation-loader w-20 h-full bg-primary-color"></div>
+				</div>
+			</div>
+		</div>
+
+		<footer class="footer-section bg-[#0b0d17] text-gray-400 w-full mt-auto">
+			<div class="grid grid-cols-12 container mx-auto px-4 sm:px-8">
+				<div class="col-span-12 py-[50px]">
+					<div class="grid grid-cols-12 gap-2">
+						<div class="col-span-12 sm:col-span-6 lg:col-span-4">
+							<div class="pb-6">
+								<img src="/static/store/img/logo.png" class="h-[40px]" alt="logo" />
+							</div>
+							<div>
+								<div class="flex items-center gap-[10px] py-2">
+									<i class="bi bi-envelope-fill text-xl text-primary-color flex"></i>
+									<a id="email-footer" class="break-all" href="#"> </a>
+								</div>
+								<div class="flex items-center gap-[10px] py-2">
+									<i class="bi bi-telephone-fill text-xl text-primary-color flex"></i>
+									<a id="phone-footer" class="break-all" href="#"> </a>
+								</div>
+								<div class="flex items-center gap-[10px] py-2">
+									<i class="bi bi-geo-alt-fill text-xl text-primary-color flex"></i>
+									<span id="address"class="break-all"> </span>
+								</div>
+							</div>
+						</div>
+						<div class="py-5 col-span-12 sm:col-span-6 sm:py-0 lg:col-span-4">
+							<h3 class="text-gray-300 font-semibold pb-2">Useful Links</h3>
+							<div>
+								<ul class="text-sm flex flex-col flex-wrap xs:max-h-[200px] gap-2">
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Terms &amp; Conditions</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">New products</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Best sales</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Secure payment</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Services</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Delivery</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Legal Notice</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">About us</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Contact us</a>
+									</li>
+									<li class="group relative flex items-center hover:text-primary-color">
+										<i class="bi bi-circle-fill flex text-[6px] text-primary-color invisible group-hover:visible absolute -left-4"></i>
+										<a href="#" class="group-hover:text-white transition-all-300">Stores</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+						<div class="col-span-12 lg:col-span-4">
+							<h3 class="text-gray-300 font-semibold pb-2">Be the first to know it</h3>
+							<span class="text-sm py-2">Subscribe to receive updates on our store and special offers</span>
+							<form class="py-2">
+								<div class="bg-gray-rgba rounded-lg overflow-hidden p-2 flex">
+									<input class="bg-transparent w-full pl-2 border-none focus:ring-0 focus:ring-transparent focus:border-none" type="text" placeholder="Your email address" />
+									<button class="p-1" type="submit">
+										<i class="bi bi-send text-lg text-white flex"></i>
+									</button>
+								</div>
+							</form>
+							<div class="py-2 flex gap-2">
+								<div class="relative rounded-full h-8 w-8 overflow-hidden">
+									<a class="instagram-before flex justify-center items-center text-white bg-gray-rgba text-center h-8 w-8" href="#">
+										<i class="bi bi-instagram flex relative z-[2]"></i>
+									</a>
+								</div>
+								<div class="bg-gray-rgba hover:bg-facebook rounded-full h-8 w-8 transition-all-300">
+									<a class="h-8 w-8 flex justify-center items-center" href="#">
+										<i class="bi bi-facebook text-white flex"></i>
+									</a>
+								</div>
+								<div class="bg-gray-rgba hover:bg-twitter rounded-full h-8 w-8 transition-all-300">
+									<a class="h-8 w-8 flex justify-center items-center" href="#">
+										<i class="bi bi-twitter text-white flex"></i>
+									</a>
+								</div>
+								<div class="bg-gray-rgba hover:bg-youtube rounded-full h-8 w-8 transition-all-300">
+									<a class="h-8 w-8 flex justify-center items-center" href="#">
+										<i class="bi bi-youtube text-white flex"></i>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-span-12 pb-5">
+					<p class="text-center">© 2022 Example. All rights reserved</p>
+				</div>
+			</div>
+		</footer>
+
+		<script src="https://unpkg.com/@popperjs/core@2"></script>
+		<script src="https://unpkg.com/tippy.js@6"></script>
+		<script src="{% static 'store/unpkg.com/swiper%409.0.5/swiper-bundle.min.js'%}"></script>
+		<script src="{% static 'store/npkg.com/metismenujs%401.4.0/dist/metismenujs.min.js'%}"></script>
+		<script src="{% static 'store/plugins/iziToast/iziToast.min.js'%}"></script>
+		<script src="{% static 'store/js/main.js'%}"></script>
+		<script src="{% static 'jquery/jquery.min.js'%}"></script>
+		<script src="{% static 'inicio.js'%}"></script>
+		<script src="{% static 'quick-view-modal.js'%}"></script>
+		
+        <link href="{% static 'sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}" rel="stylesheet"/>
+        <script src="{% static 'sweetalert2/sweetalert2.min.js' %}"></script>
+		
+		
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+				<li class="{{ message.tags }}">{{ message }}</li>
+			{% endfor %}
+		</ul>
+	{% endif %}
+
+		<script type="text/javascript">
+			 
+			if ('{{ message.tags }}' == 'error') {
+	
+				Swal.fire({
+					icon: 'error',
+					title: '{{ message.tags}}',
+					html: '{{ message }}',
+	
+				});
+			}
+	
+			if ('{{ message.tags }}' == 'success') {
+				Swal.fire({
+					icon: 'success',
+					title: '{{ message.tags}}',
+					html: '{{ message }}',
+	
+				});
+			}
+	
+		</script>
+ 
+		{% block extrajs %} 
+
+		{% endblock extrajs %}		
+	</body>
+ 
+
+</html>

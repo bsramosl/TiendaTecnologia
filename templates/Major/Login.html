@@ -1,0 +1,84 @@
+
+{% extends "Layouts/BaseMajor.html" %}
+{% load static %}
+
+{% block title %}
+ Alppha
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+
+{% block content %} 
+
+
+<div class="login-section container mx-auto px-2 sm:px-8 my-5">
+    <div class="p-5 bg-white max-w-[500px] rounded-lg mx-auto">
+        <div class="my-5">
+            <img class="mx-auto" src="img/logo2.png" alt="logo" />
+        </div>
+        <form method="post"  >
+            {% csrf_token %}
+            <div class="flex flex-col gap-4">
+                <div class="relative flex items-center h-[40px]">
+                    <i class="bi bi-person absolute flex ml-2 text-gray-400 text-[24px]"></i>
+                    {{ form.username }}
+                </div>
+                <div class="relative flex items-center h-[40px]">
+                    <i class="bi bi-lock absolute flex ml-2 text-gray-400 text-[24px]"></i>
+                    {{ form.password }}
+                </div>
+                <button class="btn-effect h-full w-full p-2 bg-primary-color rounded-lg transition-all-300" type="submit">
+                    <span class="font-bold uppercase text-white">Login</span>
+                </button>
+            </div>
+            <div class="flex flex-wrap gap-2 justify-between items-center my-2">
+                <label class="flex items-center gap-2 select-none">
+                    <input class="checkbox" type="checkbox" />
+                    <span class="text-gray-title">Remember</span>
+                </label>
+                <a class="underlined-animated after:bottom-0 text-[#3091ff]" href="#">Forgot Password?</a>
+            </div>
+        </form>
+        <span class="or text-gray-title py-2 flex items-center h-[50px]">
+            <span class="text-sm uppercase mx-2">Or</span>
+        </span>
+        <div class="flex flex-col sm:flex-row justify-center flex-wrap gap-5">
+            <button class="bg-facebook flex justify-center items-center h-[50px] min-w-[100px] rounded-lg hover:scale-110 transition-all-300">
+                <i class="bi bi-facebook flex text-white text-3xl"></i>
+            </button>
+            <button class="bg-twitter flex justify-center items-center h-[50px] min-w-[100px] rounded-lg hover:scale-110 transition-all-300">
+                <i class="bi bi-twitter flex text-white text-3xl"></i>
+            </button>
+            <button class="bg-google flex justify-center items-center h-[50px] min-w-[100px] rounded-lg hover:scale-110 transition-all-300">
+                <i class="bi bi-google flex text-white text-3xl"></i>
+            </button>
+        </div>
+        <div class="mt-5 pt-5 flex flex-col justify-center items-center border-t border-t-gray-400">
+            <span>Don't have a account?</span>
+            <a class="btn-effect text-white rounded-lg bg-primary-color p-2" href="sign-up.html">
+                <span>Create one</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
+
+
+{% block extrajs %}  
+
+ 
+
+{% endblock extrajs %}
+
+
+
+
+
+
+
+

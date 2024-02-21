@@ -1,0 +1,273 @@
+{% extends "Layouts/BaseMajor.html" %}
+{% load static %}
+
+{% block title %}
+ Alppha
+{% endblock %}
+
+
+{% block css %} 
+
+ 
+{% endblock %}
+
+{% block content %} 
+
+<div class="banners-section container mx-auto px-2 sm:px-8 my-5">
+	<div class="grid grid-cols-12 gap-5">
+		<div class="swiper-container col-span-12 md:col-span-8 rounded-lg overflow-hidden">
+			<div class="swiper swiper-banner group relative flex items-center">
+				<div class="swiper-wrapper max-h-[377px]">
+					<div class="swiper-slide">
+						<img src="/static/store/img/banner/banner-1.jpg" alt="banner 1" />
+					</div>
+					<div class="swiper-slide">
+						<img src="/static/store/img/banner/banner-2.jpg" alt="banner 2" />
+					</div>
+					<div class="swiper-slide">
+						<img src="/static/store/img/banner/banner-3.jpg" alt="banner 3" />
+					</div>
+				</div>
+				<div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+				<div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+		<div class="hidden md:block col-span-4 rounded-lg overflow-hidden relative group">
+			<div class="overlay-gradient absolute h-full w-full z-[1]"></div>
+			<img class="w-full h-full object-cover transition-all-300 hover:transform group-hover:scale-110" src="/static/store/img/categories/sec-desktop-g.jpg" alt="banner-img" />
+			<div class="absolute top-0 left-0 flex items-center h-full w-full">
+				<div class="p-5 z-[2]">
+					<h3 class="uppercase text-lg font-bold text-primary-color drop-shadow-xl">Armed pc gamer</h3>
+					<p class="text-white my-5 drop-shadow-md">Choose your pc and play!</p>
+					<a class="btn-effect inline-block text-white bg-primary-color rounded-lg py-2 px-3" href="#">
+						<span>Shop now</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="information-section container mx-auto px-2 sm:px-8 my-5">
+	<div class="grid grid-cols-12 gap-5">
+		<div class="col-span-12 sm:col-span-6 lg:col-span-3 flex">
+			<div class="flex items-center w-full gap-4 p-5 xs:pl-[20%] sm:pl-5 rounded-lg bg-white hover:shadow-lg transition-all-300">
+				<div class="rounded-full border-2">
+					<i class="bi bi-truck text-primary-color text-[40px] p-3 flex"></i>
+				</div>
+				<div>
+					<h6 class="font-bold capitalize">Free shipping</h6>
+					<p class="text-sm text-gray-400 break-all">Orders over $100</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-span-12 sm:col-span-6 lg:col-span-3 flex">
+			<div class="flex items-center w-full gap-4 p-5 xs:pl-[20%] sm:pl-5 rounded-lg bg-white hover:shadow-lg transition-all-300">
+				<div class="rounded-full border-2">
+					<i class="bi bi-cash-coin text-primary-color text-[40px] p-3 flex"></i>
+				</div>
+				<div>
+					<h6 class="font-bold capitalize">Money back</h6>
+					<p class="text-sm text-gray-400 break-all">With a 30 day</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-span-12 sm:col-span-6 lg:col-span-3 flex">
+			<div class="flex items-center w-full gap-4 p-5 xs:pl-[20%] sm:pl-5 rounded-lg bg-white hover:shadow-lg transition-all-300">
+				<div class="rounded-full border-2">
+					<i class="bi bi-shield-check text-primary-color text-[40px] p-3 flex"></i>
+				</div>
+				<div>
+					<h6 class="font-bold capitalize">Secure payment</h6>
+					<p class="text-sm text-gray-400 break-all">Secured payment</p>
+				</div>
+			</div>
+		</div>
+		<div class="col-span-12 sm:col-span-6 lg:col-span-3 flex">
+			<div class="flex items-center w-full gap-4 p-5 xs:pl-[20%] sm:pl-5 rounded-lg bg-white hover:shadow-lg transition-all-300">
+				<div class="rounded-full border-2">
+					<i class="bi bi-headset text-primary-color text-[40px] p-3 flex"></i>
+				</div>
+				<div>
+					<h6 class="font-bold capitalize">Online support</h6>
+					<p class="text-sm text-gray-400 break-all">Support 24/7</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div class="offers-section container mx-auto px-2 sm:px-8 my-5">
+	<div class="liner-container flex justify-center border-b-2 border-[rgba(119,119,119,.17)] mt-5">
+		<h1 class="uppercase text-2xl font-bold inline-block border-b-2 border-primary-color mb-[-2px] pb-3">Offers</h1>
+	</div>
+	<div class="swiper-container">
+		<div class="swiper swiper-cards group relative flex items-center py-5">
+			<div class="swiper-wrapper">
+				{% for list in recently %}
+				<div class="swiper-slide h-auto">
+					<div class="card-container h-full flex flex-col p-5 bg-white rounded-lg shadow-md hover:shadow-xl relative transition-all-300 hover:z-[2] translateY-2 overflow-hidden">
+						<div class="absolute top-[10px] right-[10px]">
+							<div class="p-[2px]">
+								<a onclick="view({{list.id}})" class="tippy tippy-left-card-view btn-open-modal flex justify-center items-center h-9 w-9 bg-[rgba(0,0,0,.3)] hover:bg-primary-hover rounded-lg transition-all-300 cursor-pointer" href="javascript:void(0)" data-target=".quick-view-modal">
+									<i class="bi bi-eye text-xl text-white flex pointer-events-none"></i>
+								</a>
+							</div>
+						</div> 
+						<div class="h-[190px] overflow-hidden rounded-lg">
+							<a href="{% url 'Store:ProductDetail' list.id %}">
+								<img class="card-object-fit w-full h-full" src="{{list.get_image}}" alt="product" />
+							</a>
+						</div>
+						<div class="my-2 flex justify-between"> 
+							<div>
+								{% if list.stock == 0 %}
+								<span class="text-xs uppercase font-bold text-black ">outstock</span>										
+								{%else %}
+								<span class="text-xs uppercase font-bold text-white bg-green-300 py-1 px-2 rounded-md">instock</span>
+								{%endif %}
+							</div>
+						</div>
+						<div class="my-1">
+							<a class="clamp font-medium break-all" href="#">{{list.name}} </a>
+						</div>
+						<div class="my-1">
+							<p class="text-sm clamp-2 text-gray-400">{{list.descripcion}}</p>
+						</div> 
+						<div class="my-1">
+							<span class="text-lg font-bold">{{list.price}}</span>
+							<span class="text-sm text-primary-color line-through">$50.00</span>
+						</div>
+						<div class="mt-auto">
+							<a class="btn-effect flex justify-center items-center w-full p-2 bg-primary-color rounded-lg transition-all-300" 
+							href="{% url 'Store:ProductDetail' list.id %}">
+								<span class="font-bold uppercase text-white">View details</span>
+							</a>
+						</div> 
+					</div>
+				</div>
+				{% endfor %}
+				 
+			</div>
+			<div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+			<div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</div>
+</div>
+<div class="banners-section-2 container mx-auto px-2 sm:px-8 my-5">
+	<div class="grid grid-cols-12 gap-5">
+		<div class="col-span-12 sm:col-span-6 rounded-lg overflow-hidden relative group h-[300px]">
+			<div class="overlay-gradient absolute h-full w-full z-[1]"></div>
+			<img class="w-full h-full object-cover transition-all-300 hover:transform group-hover:scale-110" src="/static/store/img/categories/sec-notebooks.jpg" alt="banner-img" />
+			<div class="absolute top-0 left-0 flex items-center h-full w-full">
+				<div class="p-5 z-[2]">
+					<h3 class="uppercase text-lg font-bold text-primary-color drop-shadow-xl">Notebooks</h3>
+					<p class="text-white my-5 drop-shadow-md">Choose the ideal laptop for you!</p>
+					<a class="btn-effect inline-block text-white bg-primary-color rounded-lg py-2 px-3" href="#">
+						<span>Show more</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-span-12 sm:col-span-6 rounded-lg overflow-hidden relative group h-[300px]">
+			<div class="overlay-gradient absolute h-full w-full z-[1]"></div>
+			<img class="w-full h-full object-cover transition-all-300 hover:transform group-hover:scale-110" src="/static/store/img/categories/sec-desktops.jpg" alt="banner-img" />
+			<div class="absolute top-0 left-0 flex items-center h-full w-full">
+				<div class="p-5 z-[2]">
+					<h3 class="uppercase text-lg font-bold text-primary-color drop-shadow-xl">Desktops</h3>
+					<p class="text-white my-5 drop-shadow-md">Build your PC at the best price!</p>
+					<a class="btn-effect inline-block text-white bg-primary-color rounded-lg py-2 px-3" href="#">
+						<span>Show more</span>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="products-1-section container mx-auto px-2 sm:px-8 my-5">
+	<div class="liner-container flex justify-center border-b-2 border-[rgba(119,119,119,.17)] mt-5">
+		<h1 class="uppercase text-2xl font-bold inline-block border-b-2 border-primary-color mb-[-2px] pb-3">Notebooks</h1>
+	</div>
+	<div class="grid grid-cols-12 gap-5">
+		<div class="col-span-3 rounded-l-lg relative group overflow-hidden hidden xl:block my-5">
+			<div class="overlay-gradient absolute h-full w-full z-[1]"></div>
+			<img class="w-full h-full object-cover transition-all-300 hover:transform group-hover:scale-110" src="/static/store/img/categories/sliders/notebooks.jpg" alt="banner-img" />
+			<div class="absolute top-0 left-0 flex items-center h-full w-full">
+				<div class="p-5 z-[2]">
+					<h3 class="uppercase text-lg font-bold text-primary-color drop-shadow-xl">Notebooks</h3>
+					<p class="text-white my-5 drop-shadow-md">Choose your laptop now!</p>
+					<a class="btn-effect inline-block text-white bg-primary-color rounded-lg py-2 px-3" href="#">
+						<span>Show more</span>
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-span-12 xl:col-span-9 cards-slider-2 swiper-container">
+			<div class="swiper swiper-cards-2 group relative flex items-center py-5">
+				<div class="swiper-wrapper">
+					{% for list in price %}
+				<div class="swiper-slide h-auto">
+					<div class="card-container h-full flex flex-col p-5 bg-white rounded-lg shadow-md hover:shadow-xl relative transition-all-300 hover:z-[2] translateY-2 overflow-hidden">
+						<div class="absolute top-[10px] right-[10px]">						 
+							<div class="p-[2px]">
+								<a onclick="view({{list.id}})" class="tippy tippy-left-card-view btn-open-modal flex justify-center items-center h-9 w-9 bg-[rgba(0,0,0,.3)] hover:bg-primary-hover rounded-lg transition-all-300 cursor-pointer" href="javascript:void(0)" data-target=".quick-view-modal">
+									<i class="bi bi-eye text-xl text-white flex pointer-events-none"></i>
+								</a>
+							</div>
+						</div> 
+						<div class="h-[190px] overflow-hidden rounded-lg">
+							<a href="{% url 'Store:ProductDetail' list.id %}">
+								<img class="card-object-fit w-full h-full" src="{{list.get_image}}" alt="product" />
+							</a>
+						</div>
+						<div class="my-2 flex justify-between"> 
+							<div>
+								{% if list.stock == 0 %}
+								<span class="text-xs uppercase font-bold text-black ">outstock</span>										
+								{%else %}
+								<span class="text-xs uppercase font-bold text-white bg-green-300 py-1 px-2 rounded-md">instock</span>
+								{%endif %}
+							</div>
+						</div>
+						<div class="my-1">
+							<a class="clamp font-medium break-all" href="#">{{list.name}} </a>
+						</div>
+						<div class="my-1">
+							<p class="text-sm clamp-2 text-gray-400">{{list.descripcion}}</p>
+						</div> 
+						<div class="my-1">
+							<span class="text-lg font-bold">{{list.price}}</span>
+							<span class="text-sm text-primary-color line-through">$50.00</span>
+						</div>
+						<div class="mt-auto">
+							<a class="btn-effect flex justify-center items-center w-full p-2 bg-primary-color rounded-lg transition-all-300" 
+							href="{% url 'Store:ProductDetail' list.id %}">
+								<span class="font-bold uppercase text-white">View details</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+				 
+				</div>
+				<div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+				<div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+				<div class="swiper-pagination"></div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+{% endblock %}
+
+
+{% block extrajs %} 
+
+<script src="{% static 'ajax.js'%}"></script>
+ 
+{% endblock extrajs %}

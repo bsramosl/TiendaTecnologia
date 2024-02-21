@@ -1,0 +1,75 @@
+{% extends "Layouts/IndexDashboard.html" %}
+{% load static %}
+
+{% block title %}
+  
+
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+ 
+
+{% block content %} 
+<section class="content">
+    <div class="container-fluid">
+      <!-- SELECT2 EXAMPLE -->
+      <div class="card card-default">
+        <div class="card-header">
+          <h3 class="card-title">{{subtitle}}</h3> 
+        </div>
+        <!-- /.card-header -->
+      <form method="post" class="form-horizontal"  enctype="multipart/form-data">
+        <div class="card-body">
+            {% csrf_token %}
+            {{form.as_p}}
+        </div>
+        <div class="card-footer">
+            <a href="{% url list %}"  type="button" class="btn btn-default" >Cancelar</a>
+            <button class="btn btn-info">
+                Aceptar
+            </button>
+        </div>
+      </form>   
+      </div> 
+    </div>
+    <!-- /.container-fluid -->
+  </section>
+
+{% endblock %}
+
+
+{% block extrajs %} 
+
+
+{% for message in messages %}
+
+    <link href="{% static 'sweetalert2-theme-bootstrap-4/bootstrap-4.min.css' %}" rel="stylesheet"/>
+    <script src="{% static 'sweetalert2/sweetalert2.min.js' %}"></script>
+
+    <script type="text/javascript">
+        if ('{{ message.tags }}' == 'error') {
+
+            Swal.fire({
+                icon: 'error',
+             
+                html: '{{ message }}',
+            });
+        }
+
+        if ('{{ message.tags }}' == 'success') {
+            Swal.fire({
+                icon: 'success',
+               
+                html: '{{ message }}',
+            });
+        }
+    </script>
+{% endfor %}
+ 
+ 
+{% endblock extrajs %}
+
+ 

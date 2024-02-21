@@ -1,0 +1,302 @@
+{% extends "Layouts/BaseMajor.html" %}
+{% load static %}
+
+{% block title %}
+ Alppha
+{% endblock %}
+
+
+{% block css %} 
+ 
+{% endblock %}
+
+{% block content %} 
+
+
+<div class="breadcrumb-section container mx-auto px-2 sm:px-8 my-5">
+    <ul class="flex flex-wrap gap-1 items-center">
+        <li class="hover:text-primary-color transition-all-300">
+            <a href="index.html">Home</a>
+        </li>
+        <li>
+            <i class="bi bi-caret-right-fill flex text-primary-color"></i>
+        </li>
+        <li class="hover:text-primary-color transition-all-300 active">
+            <a href="product-details.html">Product Details</a>
+        </li>
+    </ul>
+</div>
+
+
+<div class="product-details container mx-auto px-2 sm:px-8 my-5">
+    <div class="grid grid-cols-12 gap-5 bg-white rounded-lg p-2 xs:p-8">
+        <div class="col-span-12 md:col-span-6 max-h-[500px]">
+            <div class="swiper swiper-top group relative flex items-center rounded-lg">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide">
+                        <div class="swiper-zoom-container">
+                            <img src="{{object.get_image}}" alt="product" />
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="swiper-zoom-container">
+                            <img src="{{object.get_image2}}" alt="product" />
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="swiper-zoom-container">
+                            <img src="{{object.get_image3}}" alt="product" />
+                        </div>
+                    </div>
+                </div>
+                <div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+                <div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+            </div>
+            <div class="swiper swiper-thumbs">
+                <div class="swiper-wrapper">
+                    <div class="swiper-slide cursor-pointer rounded-lg">
+                        <img src="{{object.get_image}}" alt="product" />
+                    </div>
+                    <div class="swiper-slide cursor-pointer rounded-lg">
+                        <img src="{{object.get_image2}}" alt="product" />
+                    </div>
+                    <div class="swiper-slide cursor-pointer rounded-lg">
+                        <img src="{{object.get_image3}}" alt="product" />
+                    </div>
+                </div>
+                <div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+                <div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+            </div>
+        </div>
+        <div class="col-span-12 md:col-span-6">
+            <div class="my-1">
+                <a class="clamp-2 text-2xl font-medium break-all hover:text-primary-color transition-all-300" href="{% url 'Store:ProductDetail' object.id %}"> {{object.name}} </a>
+            </div>
+            <div class="product-val-stock my-2 flex justify-between"> 
+                <div class="ml-auto">
+                    {% if object.stock == 0 %}
+						<span class="text-xs uppercase font-bold text-black ">outstock</span>										
+					 {% else %}
+						<span class="text-xs uppercase font-bold text-white bg-green-300 py-1 px-2 rounded-md">instock</span>
+					{%endif %}
+                    
+                </div>
+            </div>
+            <div class="flex items-center my-5 gap-5">
+                <div class="flex text-primary-color bg-white shadow rounded-lg py-2 px-3">
+                    <span class="text-sm">$</span>
+                    <span id="price" class="text-2xl font-semibold leading-7">{{object.price}}</span>
+                </div> 
+            </div>
+            <div class="my-4">
+                <p class="clamp-5 break-all">{{object.descripcion}}</p>
+            </div>
+            <div class="flex gap-1">  
+                    <div class="flex justify-start flex-wrap gap-5">
+                        <div class="quantity inline-flex bg-white shadow rounded-lg">
+                            <input id="cant" class="quantity-value input-number w-12 text-center text-lg p-1 bg-transparent text-gray-400 border-none focus:ring-0 focus:border-none" type="number" 
+                            value="1" />
+                            <div class="flex flex-col justify-between w-5">
+                                <button class="quantity-btn increment text-primary-color" type="button"><i class="bi bi-caret-up-fill"></i></button>
+                                <button class="quantity-btn decrement text-primary-color" type="button"><i class="bi bi-caret-down-fill"></i></button>
+                            </div>
+                        </div>
+                        <div class="flex gap-2">
+                            {% if object.stock == 0 %} 
+							 									
+								{% else %}
+                                
+								<button onclick="add_cart({{object.id}});" class="btn-effect flex justify-center items-center h-full w-full p-2 bg-primary-color rounded-lg gap-2 transition-all-300" 
+                                 type="submit"> <i class="bi bi-cart-fill text-xl text-white flex"></i>
+                                 <span class="font-bold uppercase text-white">Add to cart</span> 
+                                </button>
+							{% endif %} 
+                        </div>
+                    </div> 
+            </div>
+            <div class="flex flex-col gap-2 my-5">
+                <a class="btn-open-modal p-2 rounded-lg border bg-slate-100 hover:bg-slate-200 transition-all-300" href="javascript:void(0)" data-target=".calculate-shipping-modal">
+                    <div class="flex justify-between items-center gap-2 pointer-events-none">
+                        <div class="flex items-center gap-2">
+                            <i class="bi bi-truck flex text-2xl text-primary-color"></i>
+                            <span>Calculate Shipping Cost</span>
+                        </div>
+                        <i class="bi bi-arrow-right-short flex text-primary-color text-2xl"></i>
+                    </div>
+                </a>
+            </div>
+            <div class="mt-5 pt-5 border-t border-gray-200">
+                <div>
+                    <b>Categories: </b>
+                    <span><a href="#" class="text-zinc-500">{{object.category}}</a></span>
+                </div>
+                <div class="flex gap-2">
+                    <b>Share:</b>
+                    <div class="flex items-center gap-[10px]">
+                        <a href="#">
+                            <i class="bi bi-facebook flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+                        </a>
+                        <a href="#">
+                            <i class="bi bi-twitter flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+                        </a>
+                        <a href="#">
+                            <i class="bi bi-whatsapp flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+                        </a>
+                        <a href="#">
+                            <i class="bi bi-link-45deg flex text-zinc-500 hover:text-primary-color transition-all-300"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-12">
+            <div class="liner-container flex border-b-2 border-[rgba(119,119,119,.17)] mb-5">
+                <h1 class="uppercase text-xl font-bold inline-block border-b-2 border-primary-color mb-[-2px] pb-3">Specifications</h1>
+            </div>
+            <div class="grid grid-cols-3 gap-5">
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Aplication:</b> Desktop</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b># of CPU cores:</b> 3.8GHz</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Total L3 cache:</b> 32MB</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b># of threads:</b> 12</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Total L1 cache:</b> 384KB</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>TDP/Default TDP:</b> 95W</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>CPU Socket:</b> AM4</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Temp. max:</b> 95°C</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Product line:</b> AMD Ryzen™ 5 Desktop Processors</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Max Magnification Clock:</b> Up to 4.4GHz</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Total L2 cache:</b> 3MB</span>
+                </div>
+                <div class="col-span-12 sm:col-span-1">
+                    <span><b>Gamer:</b> Yes</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-span-12">
+            <div class="liner-container flex border-b-2 border-[rgba(119,119,119,.17)] mb-5">
+                <h1 class="uppercase text-xl font-bold inline-block border-b-2 border-primary-color mb-[-2px] pb-3">Description</h1>
+            </div>
+            <div class="see-more relative pb-5">
+                <div class="see-more-container max-h-[220px] gradient-bottom overflow-hidden">
+                    <div class="see-more-content">
+                        <p>Lorem Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero ipsum dolor sit amet consectetur adipisicing elit. Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero veniam odit inventore totam quis! Hic quis perferendis quaerat enim magni.</p>
+                        <p>Lorem Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero ipsum dolor sit amet consectetur adipisicing elit. Repellat culpa quidem reprehenderit dolor aperiam, eius consequatur est deserunt. Nisi nesciunt repellendus dolorem quam obcaecati atque animi quas debitis qui harum.</p>
+                        <p>Lorem Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero ipsum, dolor sit amet consectetur adipisicing elit. Aut, veritatis. Ea voluptatibus eveniet, quam dicta quisquam repellat maxime libero. Enim omnis quis, cumque facilis doloremque doloribus tempore expedita quia accusantium.</p>
+                        <p>Lorem Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero ipsum dolor sit amet consectetur adipisicing elit. Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero veniam odit inventore totam quis! Hic quis perferendis quaerat enim magni.</p>
+                        <p>Lorem Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero ipsum dolor sit amet consectetur adipisicing elit. Repellat culpa quidem reprehenderit dolor aperiam, eius consequatur est deserunt. Nisi nesciunt repellendus dolorem quam obcaecati atque animi quas debitis qui harum.</p>
+                        <p>Lorem Unde sapiente quisquam placeat excepturi sunt mollitia vero cumque, aliquam libero ipsum, dolor sit amet consectetur adipisicing elit. Aut, veritatis. Ea voluptatibus eveniet, quam dicta quisquam repellat maxime libero. Enim omnis quis, cumque facilis doloremque doloribus tempore expedita quia accusantium.</p>
+                    </div>
+                </div>
+                <button class="btn-see-more absolute bottom-0 w-full flex justify-center z-10 hover:text-primary-color">
+                    <i class="bi bi-chevron-compact-down flex text-xl text-stroke-medium transition-all-300"></i>
+                </button>
+            </div>
+        </div> 
+    </div>
+</div>
+
+
+
+<div class="related-products container mx-auto px-2 sm:px-8 my-5">
+    <div class="liner-container flex justify-center border-b-2 border-[rgba(119,119,119,.17)] mt-5">
+        <h1 class="uppercase text-2xl font-bold inline-block border-b-2 border-primary-color mb-[-2px] pb-3">Related Products</h1>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper swiper-cards group relative flex items-center py-5">
+            <div class="swiper-wrapper">
+                {% for list in recently %}
+				<div class="swiper-slide h-auto">
+					<div class="card-container h-full flex flex-col p-5 bg-white rounded-lg shadow-md hover:shadow-xl relative transition-all-300 hover:z-[2] translateY-2 overflow-hidden">
+						<div class="absolute top-[10px] right-[10px]"> 
+							<div class="p-[2px]">
+								<a onclick="view({{list.id}})" class="tippy tippy-left-card-view btn-open-modal flex justify-center items-center h-9 w-9 bg-[rgba(0,0,0,.3)] hover:bg-primary-hover rounded-lg transition-all-300 cursor-pointer" href="javascript:void(0)" data-target=".quick-view-modal">
+									<i class="bi bi-eye text-xl text-white flex pointer-events-none"></i>
+								</a>
+							</div>
+						</div> 
+						<div class="h-[190px] overflow-hidden rounded-lg">
+							<a href="#">
+								<img class="card-object-fit w-full h-full" src="{{list.get_image}}" alt="product" />
+							</a>
+						</div>
+						<div class="my-2 flex justify-between"> 
+							<div>
+								{% if list.stock == 0 %}
+								<span class="text-xs uppercase font-bold text-black ">outstock</span>										
+								{%else %}
+								<span class="text-xs uppercase font-bold text-white bg-green-300 py-1 px-2 rounded-md">instock</span>
+								{%endif %}
+							</div>
+						</div>
+						<div class="my-1">
+							<a class="clamp font-medium break-all" href="#">{{list.name}} </a>
+						</div>
+						<div class="my-1">
+							<p class="text-sm clamp-2 text-gray-400">{{list.descripcion}}</p>
+						</div>
+						<div class="flex gap-2 my-2">
+							<span class="font-bold">Size:</span>
+							<ul class="flex gap-3">
+								<li>S</li>
+								<li>M</li>
+								<li>L</li>
+								<li>XL</li>
+							</ul>
+						</div>
+						<div class="flex gap-2 my-2">
+							<div class="block h-3 w-3 bg-blue-600 rounded-full"></div>
+							<div class="block h-3 w-3 bg-red-600 rounded-full"></div>
+							<div class="block h-3 w-3 bg-yellow-600 rounded-full"></div>
+							<div class="block h-3 w-3 bg-black rounded-full"></div>
+						</div>
+						<div class="my-1">
+							<span class="text-lg font-bold">$37.00</span>
+							<span class="text-sm text-primary-color line-through">$50.00</span>
+						</div>
+						<div class="mt-auto">
+							<a class="btn-effect flex justify-center items-center w-full p-2 bg-primary-color rounded-lg transition-all-300" 
+							href="{% url 'Store:ProductDetail' list.id %}">
+								<span class="font-bold uppercase text-white">View details</span>
+							</a>
+						</div>
+					</div>
+				</div>
+				{% endfor %}
+            </div>
+            <div class="button-next btn-slider-1 -right-16 transition-all-300 group-hover:right-4">&#10095;</div>
+            <div class="button-prev btn-slider-1 -left-16 transition-all-300 group-hover:left-4">&#10094;</div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</div>
+ 
+
+{% endblock %}
+
+
+{% block extrajs %}  
+
+<script src="{% static 'ajax.js'%}"></script>
+<script src="{% static 'addcart.js'%}"></script>
+
+{% endblock extrajs %}
